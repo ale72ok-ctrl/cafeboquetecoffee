@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Story — Café Boquete Coffee Company</title>
+<meta name="description" content="The story of Café Boquete — 90 years of family coffee farming in Boquete, Panama. Finca Gonzalez, the Gonzalez family legacy, and Alex Evans.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --espresso: #1A0F0A; --mahogany: #3D1C0E; --copper: #A0522D;
+  --gold: #C8922A; --cream: #F5EDD8; --parchment: #EDE0C4;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--espresso); color: var(--cream); font-family: 'Jost', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; padding: 1.25rem 3rem; display: flex; justify-content: space-between; align-items: center; background: rgba(26,15,10,0.97); backdrop-filter: blur(8px); }
+.nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; letter-spacing: 0.12em; color: var(--gold); text-decoration: none; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+.nav-links a { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--parchment); text-decoration: none; opacity: 0.8; transition: opacity 0.2s, color 0.2s; }
+.nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--gold); }
+.nav-links .nav-cta { background: var(--gold); color: var(--espresso); padding: 0.6rem 1.4rem; opacity: 1; font-weight: 500; }
+.nav-links .nav-cta:hover { background: var(--cream); }
+.nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.nav-burger span { display: block; width: 24px; height: 1px; background: var(--cream); }
+.mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--espresso); z-index: 300; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem; }
+.mobile-menu.open { display: flex; }
+.mobile-menu a { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; color: var(--cream); text-decoration: none; }
+.mobile-menu a:hover { color: var(--gold); }
+.mobile-close { position: absolute; top: 1.5rem; right: 2rem; font-size: 2rem; color: var(--parchment); cursor: pointer; background: none; border: none; }
+
+/* HERO */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+  padding: 7rem 2rem 5rem;
+  background: radial-gradient(ellipse at 50% 55%, #4A2010 0%, #2A120A 40%, #1A0F0A 75%);
+  position: relative;
+}
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.hero-eyebrow { font-size: 0.68rem; letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; opacity: 0; animation: fadeUp 1s ease 0.3s forwards; }
+.hero-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(3.5rem, 10vw, 7rem); line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 1s ease 0.5s forwards; }
+.hero-title em { font-style: italic; color: var(--gold); }
+.hero-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.1rem, 2.5vw, 1.4rem); color: var(--parchment); opacity: 0.8; max-width: 500px; line-height: 1.65; animation: fadeUp 1s ease 0.7s forwards; }
+.hero-divider { width: 1px; height: 70px; background: linear-gradient(to bottom, var(--gold), transparent); margin: 3rem auto 0; opacity: 0; animation: fadeUp 1s ease 0.9s forwards; }
+
+/* SECTIONS */
+.section { max-width: 720px; margin: 0 auto; padding: 6rem 2rem; }
+.section-label { font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--copper), transparent); opacity: 0.4; }
+.section-heading { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; margin-bottom: 2rem; color: var(--cream); }
+.section-heading em { font-style: italic; color: var(--gold); }
+.section-body { font-size: 1rem; line-height: 1.9; color: var(--parchment); opacity: 0.85; }
+.section-body p + p { margin-top: 1.5rem; }
+
+/* PULL QUOTE */
+.pull-quote { border-left: 2px solid var(--gold); padding: 1.5rem 2rem 1.5rem 3rem; max-width: 720px; margin: 0 auto; }
+.pull-quote p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.4rem, 3vw, 1.8rem); font-weight: 300; line-height: 1.5; color: var(--cream); }
+
+/* TIMELINE */
+.timeline { max-width: 720px; margin: 0 auto; padding: 2rem 2rem 6rem; }
+.t-item { display: grid; grid-template-columns: 90px 1fr; gap: 2rem; margin-bottom: 3rem; }
+.t-year { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold); text-align: right; border-right: 1px solid rgba(200,146,42,0.3); padding-right: 1.5rem; padding-top: 0.2rem; }
+.t-content { padding-bottom: 2rem; border-bottom: 1px solid rgba(200,146,42,0.1); }
+.t-content h4 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.2rem; color: var(--cream); margin-bottom: 0.5rem; }
+.t-content p { font-size: 0.9rem; line-height: 1.75; color: var(--parchment); opacity: 0.7; }
+
+/* OFFERINGS */
+.offerings { background: var(--mahogany); padding: 6rem 2rem; position: relative; }
+.offerings::before, .offerings::after { content: ''; position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.offerings::before { top: 0; } .offerings::after { bottom: 0; }
+.offerings-inner { max-width: 720px; margin: 0 auto; }
+.offerings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 3rem; }
+.o-card { padding: 2rem; border: 1px solid rgba(200,146,42,0.2); transition: border-color 0.3s; }
+.o-card:hover { border-color: rgba(200,146,42,0.5); }
+.o-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+.o-name { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--gold); margin-bottom: 0.5rem; }
+.o-desc { font-size: 0.85rem; line-height: 1.7; color: var(--parchment); opacity: 0.7; }
+
+/* CLOSING */
+.closing { text-align: center; padding: 8rem 2rem; background: radial-gradient(ellipse at 50% 50%, #3D1C0E 0%, #1A0F0A 70%); position: relative; }
+.closing::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.closing-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 300; line-height: 1.4; max-width: 600px; margin: 0 auto 1.5rem; color: var(--cream); }
+.closing-sig { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
+.closing-divider { width: 60px; height: 1px; background: var(--copper); margin: 1.5rem auto; opacity: 0.5; }
+.closing-actions { margin-top: 3rem; display: flex; gap: 1.25rem; justify-content: center; flex-wrap: wrap; }
+.btn-primary { background: var(--gold); color: var(--espresso); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; padding: 1rem 2.5rem; text-decoration: none; transition: background 0.2s; display: inline-block; }
+.btn-primary:hover { background: var(--cream); }
+.btn-outline { border: 1px solid rgba(200,146,42,0.5); color: var(--parchment); font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; padding: 1rem 2.5rem; text-decoration: none; transition: border-color 0.2s, color 0.2s; display: inline-block; }
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+/* FOOTER */
+footer { background: #0F0804; padding: 3rem 2rem; border-top: 1px solid rgba(200,146,42,0.15); text-align: center; }
+.footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--gold); letter-spacing: 0.15em; margin-bottom: 1rem; }
+.footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.footer-links a { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--parchment); text-decoration: none; opacity: 0.5; transition: opacity 0.2s; }
+.footer-links a:hover { opacity: 1; color: var(--gold); }
+.footer-copy { font-size: 0.72rem; color: var(--parchment); opacity: 0.3; }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left { opacity: 0; transform: translateX(-20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .nav-burger { display: flex; }
+  .t-item { grid-template-columns: 65px 1fr; gap: 1rem; }
+  .pull-quote { padding-left: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Café Boquete</a>
+  <ul class="nav-links">
+    <li><a href="story.html" class="active">Our Story</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="wholesale.html">Wholesale</a></li>
+    <li><a href="shop.html" class="nav-cta">Order Now</a></li>
+  </ul>
+  <div class="nav-burger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu">
+  <button class="mobile-close" onclick="document.querySelector('.mobile-menu').classList.remove('open')">×</button>
+  <a href="index.html">Home</a>
+  <a href="story.html">Our Story</a>
+  <a href="shop.html">Shop</a>
+  <a href="wholesale.html">Wholesale</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">Est. in the highlands of Boquete, Panama</p>
+  <h1 class="hero-title">Our <em>Story</em></h1>
+  <p class="hero-sub">Ninety years of family craft. One cup at a time.</p>
+  <div class="hero-divider"></div>
+</section>
+
+<!-- SECTION 1 -->
+<article class="section reveal">
+  <div class="section-label">The Beginning</div>
+  <h2 class="section-heading">My family has been farming coffee in <em>Boquete, Panama</em> for over 90 years.</h2>
+  <div class="section-body">
+    <p>Long before the region became world-famous — before international auctions, before Geisha coffee captivated the specialty world — the Gonzalez family was already cultivating beans in the same volcanic highlands, guided by the same morning mists and the same generational instinct for quality.</p>
+    <p>I'm Alex Evans, and I grew up hearing those stories. The careful hand-sorting of cherries. The rhythms of harvest season. The pride in a bean grown slowly, at altitude, in soil that has been worked and understood across generations. Coffee wasn't just a crop in my family — it was a craft, a culture, and a calling.</p>
+  </div>
+</article>
+
+<!-- PULL QUOTE -->
+<blockquote class="pull-quote reveal">
+  <p>"Coffee wasn't just a crop in my family — it was a craft, a culture, and a calling."</p>
+</blockquote>
+
+<!-- SECTION 2 -->
+<article class="section reveal">
+  <div class="section-label">The Land</div>
+  <h2 class="section-heading">Every bean we source carries a <em>family name.</em></h2>
+  <div class="section-body">
+    <p>Café Boquete was born from that inheritance. Every coffee we source comes from land my family owns today, or land my grandfather once farmed with his own hands. These are not anonymous origins or distant suppliers — they are fields with family names attached, worked by people we know and trust, on soil our family has tended for nearly a century.</p>
+    <p>What arrives in your cup has a name, a place, and a lineage that goes back generations.</p>
+  </div>
+</article>
+
+<!-- TIMELINE -->
+<div class="timeline">
+  <div class="t-item reveal-left">
+    <div class="t-year">1930s</div>
+    <div class="t-content">
+      <h4>Finca Gonzalez is established</h4>
+      <p>The Gonzalez family begins farming coffee in the volcanic highlands of Boquete, Chiriquí — decades before the region gains international recognition.</p>
+    </div>
+  </div>
+  <div class="t-item reveal-left" style="transition-delay:0.15s">
+    <div class="t-year">Generations</div>
+    <div class="t-content">
+      <h4>The craft is passed down</h4>
+      <p>Harvest rhythms, processing traditions, and deep knowledge of the land pass from one generation to the next — long before specialty coffee terminology existed.</p>
+    </div>
+  </div>
+  <div class="t-item reveal-left" style="transition-delay:0.3s">
+    <div class="t-year">Today</div>
+    <div class="t-content">
+      <h4>Café Boquete brings it to Portland</h4>
+      <p>Alex Evans founds Café Boquete Coffee Company — sourcing exclusively from family-owned and family-connected land in Boquete, bridging two continents with one cup.</p>
+    </div>
+  </div>
+</div>
+
+<!-- OFFERINGS -->
+<section class="offerings">
+  <div class="offerings-inner">
+    <div class="section-label">What We Offer</div>
+    <h2 class="section-heading" style="margin-bottom:0.5rem">Panama's land <em>gives generously.</em></h2>
+    <div class="offerings-grid">
+      <div class="o-card reveal">
+        <div class="o-icon">☕</div>
+        <div class="o-name">Single-Origin Coffee</div>
+        <div class="o-desc">Caturra, Pacamara, and Catuai — all roasted light to medium, all from family land. Whole bean only, 12oz bags.</div>
+      </div>
+      <div class="o-card reveal" style="transition-delay:0.15s">
+        <div class="o-icon">🍵</div>
+        <div class="o-name">Cascara</div>
+        <div class="o-desc">Sun-dried coffee cherry tea from our family's farm. Sold by the half pound and pound. Fruity, earthy, naturally sweet.</div>
+      </div>
+      <div class="o-card reveal" style="transition-delay:0.3s">
+        <div class="o-icon">🌿</div>
+        <div class="o-name">Green Beans</div>
+        <div class="o-desc">Unroasted green beans for wholesale roasters. Direct from Finca Gonzalez. Introduction orders available at 20 lbs.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="closing">
+  <div class="reveal">
+    <p class="closing-text">"Café Boquete is my way of bringing home what my family spent generations building. We invite you to taste it."</p>
+    <div class="closing-divider"></div>
+    <p class="closing-sig">— Alex Evans, Founder · Café Boquete Coffee Company</p>
+    <div class="closing-actions">
+      <a href="shop.html" class="btn-primary">Shop Now</a>
+      <a href="wholesale.html" class="btn-outline">Wholesale Inquiry</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Café Boquete Coffee Company</div>
+  <nav class="footer-links">
+    <a href="story.html">Our Story</a>
+    <a href="shop.html">Shop</a>
+    <a href="wholesale.html">Wholesale</a>
+    <a href="mailto:hello@cafeboquete.com">Contact</a>
+  </nav>
+  <p class="footer-copy">© 2025 Café Boquete Coffee Company · Boquete, Panama · Portland, Oregon · All prices exclude shipping</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal, .reveal-left').forEach(function(el) { observer.observe(el); });
+</script>
+</body>
+</html>

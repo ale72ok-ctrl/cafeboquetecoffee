@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wholesale — Café Boquete Coffee Company</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --espresso: #1A0F0A; --mahogany: #3D1C0E; --copper: #A0522D; --gold: #C8922A; --cream: #F5EDD8; --parchment: #EDE0C4; }
+body { background: var(--espresso); color: var(--cream); font-family: 'Jost', sans-serif; font-weight: 300; overflow-x: hidden; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; padding: 1.25rem 3rem; display: flex; justify-content: space-between; align-items: center; background: rgba(26,15,10,0.97); backdrop-filter: blur(8px); }
+.nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; letter-spacing: 0.12em; color: var(--gold); text-decoration: none; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+.nav-links a { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--parchment); text-decoration: none; opacity: 0.8; transition: opacity 0.2s, color 0.2s; }
+.nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--gold); }
+.nav-links .nav-cta { background: var(--gold); color: var(--espresso); padding: 0.6rem 1.4rem; opacity: 1; font-weight: 500; }
+.nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.nav-burger span { display: block; width: 24px; height: 1px; background: var(--cream); }
+.mobile-menu { display: none; position: fixed; inset: 0; background: var(--espresso); z-index: 300; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem; }
+.mobile-menu.open { display: flex; }
+.mobile-menu a { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; color: var(--cream); text-decoration: none; }
+.mobile-close { position: absolute; top: 1.5rem; right: 2rem; font-size: 2rem; color: var(--parchment); cursor: pointer; background: none; border: none; }
+
+/* HERO */
+.hero { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 8rem 2rem 5rem; background: radial-gradient(ellipse at 50% 55%, #4A2010 0%, #2A120A 40%, #1A0F0A 75%); position: relative; }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.eyebrow { font-size: 0.68rem; letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; display: block; opacity: 0; animation: fadeUp 1s ease 0.3s forwards; }
+.hero-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(3rem, 8vw, 6rem); line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 1.25rem; opacity: 0; animation: fadeUp 1s ease 0.5s forwards; }
+.hero-title em { font-style: italic; color: var(--gold); }
+.hero-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem; color: var(--parchment); max-width: 520px; line-height: 1.65; opacity: 0; animation: fadeUp 1s ease 0.7s forwards; }
+
+/* INTRO OFFER */
+.intro-offer { background: var(--mahogany); padding: 5rem 2rem; position: relative; }
+.intro-offer::before, .intro-offer::after { content: ''; position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.intro-offer::before { top: 0; } .intro-offer::after { bottom: 0; }
+.intro-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.intro-text .label { font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
+.intro-text h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3rem); color: var(--cream); margin-bottom: 1.25rem; line-height: 1.15; }
+.intro-text h2 em { font-style: italic; color: var(--gold); }
+.intro-text p { font-size: 0.95rem; line-height: 1.85; color: var(--parchment); opacity: 0.8; margin-bottom: 1rem; }
+.intro-box { background: var(--espresso); border: 1px solid rgba(200,146,42,0.3); padding: 2.5rem; text-align: center; }
+.intro-box-label { font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.25rem; }
+.intro-price { font-family: 'Cormorant Garamond', serif; font-size: 4rem; color: var(--gold); line-height: 1; }
+.intro-price span { font-size: 1.2rem; font-family: 'Jost', sans-serif; color: var(--parchment); opacity: 0.7; }
+.intro-qty { font-size: 0.85rem; color: var(--parchment); opacity: 0.7; margin: 0.5rem 0 1.5rem; letter-spacing: 0.1em; }
+.intro-includes { text-align: left; margin-bottom: 2rem; }
+.intro-includes li { font-size: 0.85rem; color: var(--parchment); opacity: 0.8; padding: 0.4rem 0; border-bottom: 1px solid rgba(200,146,42,0.1); list-style: none; display: flex; align-items: center; gap: 0.75rem; }
+.intro-includes li::before { content: '—'; color: var(--gold); font-family: 'Cormorant Garamond', serif; }
+
+/* PRICING TABLE */
+.pricing-section { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; }
+.section-label { font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--copper), transparent); opacity: 0.4; }
+.section-heading { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 2.8rem); color: var(--cream); margin-bottom: 2.5rem; line-height: 1.15; }
+.section-heading em { font-style: italic; color: var(--gold); }
+.price-table { width: 100%; border-collapse: collapse; }
+.price-table th { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); padding: 1rem 1.5rem; text-align: left; border-bottom: 1px solid rgba(200,146,42,0.3); }
+.price-table td { padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(200,146,42,0.1); font-size: 0.9rem; color: var(--parchment); }
+.price-table tr:hover td { background: rgba(61,28,14,0.5); }
+.price-table .highlight { color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; }
+.price-table .intro-row td { background: rgba(200,146,42,0.08); }
+.price-table .intro-row td:first-child { border-left: 2px solid var(--gold); }
+
+/* VARIETIES */
+.varieties { background: var(--mahogany); padding: 5rem 2rem; position: relative; }
+.varieties::before, .varieties::after { content: ''; position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.varieties::before { top: 0; } .varieties::after { bottom: 0; }
+.varieties-inner { max-width: 900px; margin: 0 auto; }
+.varieties-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+.variety-card { background: var(--espresso); border: 1px solid rgba(200,146,42,0.15); padding: 2rem; transition: border-color 0.3s; }
+.variety-card:hover { border-color: rgba(200,146,42,0.4); }
+.variety-num { font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; display: block; }
+.variety-name { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--cream); margin-bottom: 0.75rem; }
+.variety-desc { font-size: 0.85rem; line-height: 1.75; color: var(--parchment); opacity: 0.75; }
+
+/* INQUIRY FORM */
+.inquiry { padding: 6rem 2rem; max-width: 700px; margin: 0 auto; }
+.form-group { margin-bottom: 1.5rem; }
+.form-group label { display: block; font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; background: var(--mahogany); border: 1px solid rgba(200,146,42,0.25);
+  color: var(--cream); font-family: 'Jost', sans-serif; font-size: 0.9rem; font-weight: 300;
+  padding: 0.9rem 1.1rem; outline: none; transition: border-color 0.2s;
+  appearance: none; -webkit-appearance: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); }
+.form-group textarea { resize: vertical; min-height: 120px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.form-submit { background: var(--gold); color: var(--espresso); font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; padding: 1.1rem 3rem; border: none; cursor: pointer; transition: background 0.2s; width: 100%; margin-top: 0.5rem; }
+.form-submit:hover { background: var(--cream); }
+.form-note { font-size: 0.78rem; color: var(--parchment); opacity: 0.55; text-align: center; margin-top: 1rem; line-height: 1.6; }
+
+/* CLOSING */
+.closing { text-align: center; padding: 6rem 2rem; background: radial-gradient(ellipse at 50% 50%, #3D1C0E 0%, #1A0F0A 70%); position: relative; }
+.closing::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.closing-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 300; color: var(--cream); max-width: 620px; margin: 0 auto 1rem; line-height: 1.5; }
+.closing-sig { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
+.closing-div { width: 60px; height: 1px; background: var(--copper); margin: 1.25rem auto; opacity: 0.5; }
+
+footer { background: #0F0804; padding: 3rem 2rem; border-top: 1px solid rgba(200,146,42,0.15); text-align: center; }
+.footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--gold); letter-spacing: 0.15em; margin-bottom: 1rem; }
+.footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.footer-links a { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--parchment); text-decoration: none; opacity: 0.5; transition: opacity 0.2s; }
+.footer-links a:hover { opacity: 1; color: var(--gold); }
+.footer-copy { font-size: 0.72rem; color: var(--parchment); opacity: 0.3; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .nav-burger { display: flex; }
+  .intro-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Café Boquete</a>
+  <ul class="nav-links">
+    <li><a href="story.html">Our Story</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="wholesale.html" class="active">Wholesale</a></li>
+    <li><a href="shop.html" class="nav-cta">Order Now</a></li>
+  </ul>
+  <div class="nav-burger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu">
+  <button class="mobile-close" onclick="document.querySelector('.mobile-menu').classList.remove('open')">×</button>
+  <a href="index.html">Home</a>
+  <a href="story.html">Our Story</a>
+  <a href="shop.html">Shop</a>
+  <a href="wholesale.html">Wholesale</a>
+</div>
+
+<section class="hero">
+  <span class="eyebrow">Green Beans · Direct Family Sourcing · Boquete, Panama</span>
+  <h1 class="hero-title">Wholesale<br><em>Green Beans</em></h1>
+  <p class="hero-sub">Unroasted single-origin green beans sourced directly from Finca Gonzalez. Three varieties. Full traceability. Direct from our family's land.</p>
+</section>
+
+<section class="intro-offer">
+  <div class="intro-inner">
+    <div class="intro-text reveal">
+      <span class="label">Roaster's Introduction</span>
+      <h2>Try before you <em>commit.</em></h2>
+      <p>New to Café Boquete? Start with our Roaster's Introduction — 20 lbs at $9/lb. Enough to run multiple roast profiles, cup seriously, and share with your team.</p>
+      <p>Your choice of variety. Full origin documentation included. Direct access to our sourcing team.</p>
+    </div>
+    <div class="intro-box reveal">
+      <div class="intro-box-label">Roaster's Introduction Offer</div>
+      <div class="intro-price">$9 <span>/ lb</span></div>
+      <div class="intro-qty">20 lb minimum · One-time intro rate</div>
+      <ul class="intro-includes">
+        <li>Your choice of Caturra, Pacamara, or Catuai</li>
+        <li>Full origin documentation from Finca Gonzalez</li>
+        <li>Farm story sheet for your menu or website</li>
+        <li>Direct contact with our sourcing team</li>
+        <li>Volume pricing on follow-up orders</li>
+      </ul>
+      <a href="#inquiry" class="form-submit" style="display:block;text-align:center;text-decoration:none;padding:1.1rem;">Request Introduction Order</a>
+    </div>
+  </div>
+</section>
+
+<section class="pricing-section">
+  <div class="section-label">Standard Wholesale Pricing</div>
+  <h2 class="section-heading">Volume pricing that <em>grows with you.</em></h2>
+  <table class="price-table">
+    <thead>
+      <tr>
+        <th>Order Size</th>
+        <th>Price Per Lb</th>
+        <th>Total (Est.)</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="intro-row">
+        <td><strong style="color:var(--gold)">20 lbs</strong></td>
+        <td class="highlight">$9.00</td>
+        <td>$180</td>
+        <td>Intro rate — new roasters only</td>
+      </tr>
+      <tr>
+        <td>50 lbs</td>
+        <td class="highlight">$8.50</td>
+        <td>$425</td>
+        <td>Standard wholesale</td>
+      </tr>
+      <tr>
+        <td>100 lbs</td>
+        <td class="highlight">$8.00</td>
+        <td>$800</td>
+        <td>Volume discount</td>
+      </tr>
+      <tr>
+        <td>Full Sack (150 lbs)</td>
+        <td class="highlight">$7.50</td>
+        <td>$1,125</td>
+        <td>GrainPro bag · Best per-lb rate</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.78rem;color:var(--parchment);opacity:0.5;margin-top:1rem;">All prices per pound, green unroasted. Shipping quoted separately based on destination and order size.</p>
+</section>
+
+<section class="varieties">
+  <div class="varieties-inner">
+    <div class="section-label">Available Varieties</div>
+    <h2 class="section-heading">Three varieties.<br><em>All from Finca Gonzalez.</em></h2>
+    <div class="varieties-grid">
+      <div class="variety-card reveal">
+        <span class="variety-num">Variety No. 01</span>
+        <div class="variety-name">Caturra</div>
+        <p class="variety-desc">Clean, bright, classic Boquete character. High acidity, medium body. Excellent for light and light-medium roast profiles. Consistent and reliable.</p>
+      </div>
+      <div class="variety-card reveal" style="transition-delay:0.15s">
+        <span class="variety-num">Variety No. 02</span>
+        <div class="variety-name">Pacamara</div>
+        <p class="variety-desc">Large bean, bold and complex. Deep fruit and chocolate notes. Rewards careful roasting — exceptional as a single-origin pour over or espresso.</p>
+      </div>
+      <div class="variety-card reveal" style="transition-delay:0.3s">
+        <span class="variety-num">Variety No. 03</span>
+        <div class="variety-name">Catuai</div>
+        <p class="variety-desc">Smooth and balanced with natural sweetness. Versatile across roast profiles. A crowd-pleasing variety that anchors blends or stands beautifully alone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="inquiry" id="inquiry">
+  <div class="section-label">Get Started</div>
+  <h2 class="section-heading" style="margin-bottom:2rem">Wholesale <em>Inquiry</em></h2>
+  <form onsubmit="handleSubmit(event)">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="Alex Evans" required>
+      </div>
+      <div class="form-group">
+        <label>Business Name</label>
+        <input type="text" placeholder="Your Roastery" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="you@yourroastery.com" required>
+      </div>
+      <div class="form-group">
+        <label>Phone (Optional)</label>
+        <input type="tel" placeholder="+1 503 000 0000">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Variety Interest</label>
+        <select>
+          <option value="">Select variety...</option>
+          <option>Caturra</option>
+          <option>Pacamara</option>
+          <option>Catuai</option>
+          <option>All three — send info</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Estimated Volume</label>
+        <select>
+          <option value="">Select volume...</option>
+          <option>20 lbs — Roaster's Introduction</option>
+          <option>50 lbs</option>
+          <option>100 lbs</option>
+          <option>Full sack (150 lbs)</option>
+          <option>Custom / ongoing</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Tell us about your roastery</label>
+      <textarea placeholder="Where you're based, what you roast, what you're looking for..."></textarea>
+    </div>
+    <button type="submit" class="form-submit">Send Inquiry</button>
+    <p class="form-note">We respond within 48 hours. All inquiries include our full origin documentation and farm story sheet at no cost.</p>
+  </form>
+</section>
+
+<section class="closing">
+  <div class="reveal">
+    <p class="closing-text">"No roaster can claim what we have — a 90-year family farming lineage, on land our grandfather worked. This story cannot be purchased or replicated."</p>
+    <div class="closing-div"></div>
+    <p class="closing-sig">— Alex Evans, Founder · Café Boquete Coffee Company</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Café Boquete Coffee Company</div>
+  <nav class="footer-links">
+    <a href="story.html">Our Story</a>
+    <a href="shop.html">Shop</a>
+    <a href="wholesale.html">Wholesale</a>
+    <a href="mailto:hello@cafeboquete.com">Contact</a>
+  </nav>
+  <p class="footer-copy">© 2025 Café Boquete Coffee Company · Boquete, Panama · Portland, Oregon</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.form-submit');
+  btn.textContent = 'Inquiry Sent — We\'ll be in touch within 48 hours';
+  btn.style.background = '#3D1C0E';
+  btn.style.color = '#C8922A';
+  btn.disabled = true;
+}
+</script>
+</body>
+</html>

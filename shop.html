@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop — Café Boquete Coffee Company</title>
+<meta name="description" content="Order Café Boquete single-origin coffee and cascara. Caturra, Pacamara, Catuai — all $26/12oz whole bean. Cascara from $18.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --espresso: #1A0F0A; --mahogany: #3D1C0E; --copper: #A0522D; --gold: #C8922A; --cream: #F5EDD8; --parchment: #EDE0C4; }
+html { scroll-behavior: smooth; }
+body { background: var(--espresso); color: var(--cream); font-family: 'Jost', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; padding: 1.25rem 3rem; display: flex; justify-content: space-between; align-items: center; background: rgba(26,15,10,0.97); backdrop-filter: blur(8px); }
+.nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; letter-spacing: 0.12em; color: var(--gold); text-decoration: none; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+.nav-links a { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--parchment); text-decoration: none; opacity: 0.8; transition: opacity 0.2s, color 0.2s; }
+.nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--gold); }
+.nav-links .nav-cta { background: var(--gold); color: var(--espresso); padding: 0.6rem 1.4rem; opacity: 1; font-weight: 500; }
+.nav-links .nav-cta:hover { background: var(--cream); }
+.nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.nav-burger span { display: block; width: 24px; height: 1px; background: var(--cream); }
+.mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--espresso); z-index: 300; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem; }
+.mobile-menu.open { display: flex; }
+.mobile-menu a { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; color: var(--cream); text-decoration: none; }
+.mobile-close { position: absolute; top: 1.5rem; right: 2rem; font-size: 2rem; color: var(--parchment); cursor: pointer; background: none; border: none; }
+
+.shop-hero { padding: 8rem 2rem 5rem; text-align: center; background: radial-gradient(ellipse at 50% 55%, #4A2010 0%, #2A120A 40%, #1A0F0A 75%); position: relative; }
+.shop-hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.shop-eyebrow { font-size: 0.68rem; letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; display: block; opacity: 0; animation: fadeUp 1s ease 0.3s forwards; }
+.shop-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(3rem, 8vw, 6rem); line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 1.25rem; opacity: 0; animation: fadeUp 1s ease 0.5s forwards; }
+.shop-title em { font-style: italic; color: var(--gold); }
+.shop-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem; color: var(--parchment); opacity: 0; max-width: 520px; margin: 0 auto; line-height: 1.65; animation: fadeUp 1s ease 0.7s forwards; }
+
+.shop-note { background: var(--mahogany); text-align: center; padding: 1rem 2rem; font-size: 0.78rem; letter-spacing: 0.1em; color: var(--parchment); opacity: 0.7; border-bottom: 1px solid rgba(200,146,42,0.15); }
+.shop-note strong { color: var(--gold); font-weight: 400; }
+
+.section-wrap { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+.section-label { font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--copper), transparent); opacity: 0.4; }
+.section-heading { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3rem); color: var(--cream); margin-bottom: 3rem; line-height: 1.15; }
+.section-heading em { font-style: italic; color: var(--gold); }
+
+.coffee-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+.product-card { background: var(--mahogany); border: 1px solid rgba(200,146,42,0.12); display: flex; flex-direction: column; opacity: 0; transform: translateY(25px); transition: opacity 0.7s ease, transform 0.7s ease, border-color 0.3s; }
+.product-card.visible { opacity: 1; transform: translateY(0); }
+.product-card:hover { border-color: rgba(200,146,42,0.4); }
+.card-top { background: var(--espresso); padding: 2.25rem 2rem 2rem; position: relative; }
+.card-top::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--gold), var(--copper)); }
+.card-tag { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; display: block; }
+.card-name { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--cream); line-height: 1.1; margin-bottom: 0.4rem; }
+.card-roast { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--copper); }
+.card-body { padding: 1.75rem 2rem; flex: 1; display: flex; flex-direction: column; }
+.card-desc { font-size: 0.9rem; line-height: 1.85; color: var(--parchment); opacity: 0.8; flex: 1; margin-bottom: 1.25rem; }
+.card-notes { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.card-note { font-size: 0.65rem; letter-spacing: 0.1em; border: 1px solid rgba(200,146,42,0.3); color: var(--gold); padding: 0.25rem 0.6rem; }
+.card-detail { font-size: 0.78rem; color: var(--parchment); opacity: 0.55; margin-bottom: 1.5rem; line-height: 1.6; }
+.card-footer { border-top: 1px solid rgba(200,146,42,0.12); padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+.card-price { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--cream); }
+.card-price span { font-size: 0.7rem; font-family: 'Jost', sans-serif; color: var(--parchment); opacity: 0.6; margin-left: 0.25rem; }
+.btn-order { background: var(--gold); color: var(--espresso); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.75rem 1.5rem; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s; display: inline-block; }
+.btn-order:hover { background: var(--cream); }
+
+.divider-line { height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 2rem; opacity: 0.3; }
+
+.cascara-wrap { background: var(--mahogany); padding: 6rem 2rem; position: relative; }
+.cascara-wrap::before, .cascara-wrap::after { content: ''; position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.cascara-wrap::before { top: 0; } .cascara-wrap::after { bottom: 0; }
+.cascara-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+.cascara-info h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 2.8rem); color: var(--cream); margin-bottom: 0.5rem; line-height: 1.15; }
+.cascara-info h2 em { font-style: italic; color: var(--gold); }
+.cascara-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--gold); margin-bottom: 1.5rem; display: block; }
+.cascara-info p { font-size: 0.95rem; line-height: 1.85; color: var(--parchment); opacity: 0.8; margin-bottom: 1.25rem; }
+.cascara-brew { background: var(--espresso); padding: 1.5rem; margin-top: 1.5rem; border-left: 2px solid var(--gold); }
+.cascara-brew h4 { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+.cascara-brew p { font-size: 0.85rem; line-height: 1.7; color: var(--parchment); opacity: 0.75; }
+.cascara-options { display: flex; flex-direction: column; gap: 1.25rem; }
+.cascara-card { background: var(--espresso); border: 1px solid rgba(200,146,42,0.15); padding: 1.75rem; opacity: 0; transform: translateX(20px); transition: opacity 0.7s ease, transform 0.7s ease, border-color 0.3s; }
+.cascara-card.visible { opacity: 1; transform: translateX(0); }
+.cascara-card:hover { border-color: rgba(200,146,42,0.45); }
+.cascara-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+.cascara-size { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--cream); }
+.cascara-price { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--gold); }
+.cascara-detail { font-size: 0.75rem; letter-spacing: 0.1em; color: var(--parchment); opacity: 0.6; margin-bottom: 1.25rem; }
+.cascara-notes { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+
+.origin-strip { text-align: center; padding: 5rem 2rem; }
+.origin-quote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.4rem, 3vw, 2rem); color: var(--cream); max-width: 620px; margin: 0 auto 1.5rem; line-height: 1.5; }
+.origin-sig { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
+.origin-div { width: 60px; height: 1px; background: var(--copper); margin: 1.25rem auto; opacity: 0.5; }
+
+footer { background: #0F0804; padding: 3rem 2rem; border-top: 1px solid rgba(200,146,42,0.15); text-align: center; }
+.footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--gold); letter-spacing: 0.15em; margin-bottom: 1rem; }
+.footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.footer-links a { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--parchment); text-decoration: none; opacity: 0.5; transition: opacity 0.2s; }
+.footer-links a:hover { opacity: 1; color: var(--gold); }
+.footer-copy { font-size: 0.72rem; color: var(--parchment); opacity: 0.3; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .nav-burger { display: flex; }
+  .cascara-inner { grid-template-columns: 1fr; gap: 3rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Café Boquete</a>
+  <ul class="nav-links">
+    <li><a href="story.html">Our Story</a></li>
+    <li><a href="shop.html" class="active">Shop</a></li>
+    <li><a href="wholesale.html">Wholesale</a></li>
+    <li><a href="shop.html" class="nav-cta">Order Now</a></li>
+  </ul>
+  <div class="nav-burger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu">
+  <button class="mobile-close" onclick="document.querySelector('.mobile-menu').classList.remove('open')">×</button>
+  <a href="index.html">Home</a>
+  <a href="story.html">Our Story</a>
+  <a href="shop.html">Shop</a>
+  <a href="wholesale.html">Wholesale</a>
+</div>
+
+<section class="shop-hero">
+  <span class="shop-eyebrow">Finca Gonzalez · Boquete, Panama</span>
+  <h1 class="shop-title">The <em>Collection</em></h1>
+  <p class="shop-sub">Single-origin coffee and cascara sourced directly from our family's land. Whole bean. Light to medium roast.</p>
+</section>
+
+<div class="shop-note">All prices exclude shipping &nbsp;·&nbsp; <strong>Whole bean only</strong> — grind just before brewing for the best cup &nbsp;·&nbsp; Direct from Finca Gonzalez, Boquete, Panama</div>
+
+<!-- COFFEE -->
+<section class="section-wrap">
+  <div class="section-label">Single-Origin Coffee</div>
+  <h2 class="section-heading">Three varieties. <em>One family's land.</em></h2>
+  <div class="coffee-grid">
+
+    <div class="product-card">
+      <div class="card-top">
+        <span class="card-tag">Variety No. 01</span>
+        <div class="card-name">Caturra</div>
+        <div class="card-roast">Light · Medium Roast · Whole Bean</div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">A classic Boquete variety known for its clean, bright character. Grown in the volcanic highlands our family has farmed for over 90 years. Roasted light to medium to let the origin speak for itself.</p>
+        <div class="card-notes">
+          <span class="card-note">Citrus</span>
+          <span class="card-note">Stone Fruit</span>
+          <span class="card-note">Honey</span>
+          <span class="card-note">Clean Finish</span>
+        </div>
+        <p class="card-detail">12oz · Whole Bean · Boquete, Panama · Finca Gonzalez</p>
+      </div>
+      <div class="card-footer">
+        <div class="card-price">$26 <span>/ 12oz</span></div>
+        <a href="#" class="btn-order">Add to Cart</a>
+      </div>
+    </div>
+
+    <div class="product-card" style="transition-delay:0.15s">
+      <div class="card-top">
+        <span class="card-tag">Variety No. 02</span>
+        <div class="card-name">Pacamara</div>
+        <div class="card-roast">Light · Medium Roast · Whole Bean</div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Bold and complex with a larger bean that rewards the patient brewer. A deep expression of Boquete's altitude and volcanic soil — layered and memorable.</p>
+        <div class="card-notes">
+          <span class="card-note">Dark Chocolate</span>
+          <span class="card-note">Berry</span>
+          <span class="card-note">Brown Sugar</span>
+          <span class="card-note">Full Body</span>
+        </div>
+        <p class="card-detail">12oz · Whole Bean · Boquete, Panama · Finca Gonzalez</p>
+      </div>
+      <div class="card-footer">
+        <div class="card-price">$26 <span>/ 12oz</span></div>
+        <a href="#" class="btn-order">Add to Cart</a>
+      </div>
+    </div>
+
+    <div class="product-card" style="transition-delay:0.3s">
+      <div class="card-top">
+        <span class="card-tag">Variety No. 03</span>
+        <div class="card-name">Catuai</div>
+        <div class="card-roast">Light · Medium Roast · Whole Bean</div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Smooth, balanced, and reliable. A staple of Boquete's farming tradition roasted light to medium to preserve its natural sweetness and gentle complexity.</p>
+        <div class="card-notes">
+          <span class="card-note">Caramel</span>
+          <span class="card-note">Almond</span>
+          <span class="card-note">Mild Citrus</span>
+          <span class="card-note">Smooth</span>
+        </div>
+        <p class="card-detail">12oz · Whole Bean · Boquete, Panama · Finca Gonzalez</p>
+      </div>
+      <div class="card-footer">
+        <div class="card-price">$26 <span>/ 12oz</span></div>
+        <a href="#" class="btn-order">Add to Cart</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<!-- CASCARA -->
+<section class="cascara-wrap">
+  <div class="cascara-inner">
+    <div class="cascara-info reveal">
+      <div class="section-label">Coffee Cherry Tea</div>
+      <h2>Cascara<br><em>Coffee Cherry Tea</em></h2>
+      <span class="cascara-sub">Finca Gonzalez · Boquete, Panama</span>
+      <p>Long before cascara had a name in specialty coffee, our family was brewing it. The sun-dried skin and pulp of the coffee cherry — naturally sweet, fruity, and earthy. A taste of the whole plant, not just the bean.</p>
+      <div class="cascara-brew">
+        <h4>How to Brew</h4>
+        <p><strong style="color:var(--gold);font-weight:400">Hot:</strong> Steep 2 tbsp per 8oz water at 190°F for 4 minutes.<br>
+        <strong style="color:var(--gold);font-weight:400">Cold:</strong> Steep overnight in cold water, 3 tbsp per 12oz. Strain and serve over ice.</p>
+      </div>
+    </div>
+    <div class="cascara-options">
+
+      <div class="cascara-card">
+        <div class="cascara-card-top">
+          <div class="cascara-size">Half Pound</div>
+          <div class="cascara-price">$18</div>
+        </div>
+        <p class="cascara-detail">8oz · Dried Coffee Cherry · Boquete Origin · Makes approx. 15–20 servings</p>
+        <div class="cascara-notes">
+          <span class="card-note">Hibiscus</span>
+          <span class="card-note">Tamarind</span>
+          <span class="card-note">Rose Hip</span>
+        </div>
+        <a href="#" class="btn-order">Add to Cart</a>
+      </div>
+
+      <div class="cascara-card" style="transition-delay:0.2s">
+        <div class="cascara-card-top">
+          <div class="cascara-size">One Pound</div>
+          <div class="cascara-price">$32</div>
+        </div>
+        <p class="cascara-detail">16oz · Dried Coffee Cherry · Boquete Origin · Makes approx. 30–40 servings</p>
+        <div class="cascara-notes">
+          <span class="card-note">Hibiscus</span>
+          <span class="card-note">Tamarind</span>
+          <span class="card-note">Rose Hip</span>
+        </div>
+        <a href="#" class="btn-order">Add to Cart</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ORIGIN -->
+<section class="origin-strip">
+  <div class="reveal">
+    <p class="origin-quote">"Every product we sell comes from land my family owns today, or land my grandfather once farmed with his own hands."</p>
+    <div class="origin-div"></div>
+    <p class="origin-sig">— Alex Evans, Founder · Café Boquete Coffee Company</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Café Boquete Coffee Company</div>
+  <nav class="footer-links">
+    <a href="story.html">Our Story</a>
+    <a href="shop.html">Shop</a>
+    <a href="wholesale.html">Wholesale</a>
+    <a href="mailto:hello@cafeboquete.com">Contact</a>
+  </nav>
+  <p class="footer-copy">© 2025 Café Boquete Coffee Company · Boquete, Panama · Portland, Oregon · All prices exclude shipping</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.product-card, .cascara-card, .reveal').forEach(function(el) { observer.observe(el); });
+</script>
+</body>
+</html>
